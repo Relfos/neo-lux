@@ -1,0 +1,6 @@
+neo-lux-demo/bin/
+packages/
+neo-lux/bin/
+neo-lux/obj/
+.vs/
+neo-lux-demo/obj/
