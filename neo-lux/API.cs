@@ -87,7 +87,7 @@ namespace NeoLux
                 }
             }
 
-            return invoke; 
+            return invoke;
         }
 
 
@@ -134,7 +134,11 @@ namespace NeoLux
         public static bool CallContract(Net net, KeyPair key, string scriptHash, string operation, object[] args)
         {
             var bytes = GenerateScript(scriptHash, operation, args);
+            return CallContract(net, key, scriptHash, bytes);
+        }
 
+        public static bool CallContract(Net net, KeyPair key, string scriptHash, byte[] bytes)
+        {
             /*var invoke = TestInvokeScript(net, bytes);
             if (invoke.state == null)
             {
@@ -197,7 +201,7 @@ namespace NeoLux
                 var change = new Transaction.Output()
                 {
                     assetID = gasId,
-                    scriptHash =  reverseHex( key.signatureHash.ToArray().ByteToHex()),
+                    scriptHash = reverseHex(key.signatureHash.ToArray().ByteToHex()),
                     value = left
                 };
                 outputs.Add(change);
@@ -214,7 +218,7 @@ namespace NeoLux
 
             };
 
-                //File.WriteAllBytes("output2.avm", bytes);
+            //File.WriteAllBytes("output2.avm", bytes);
 
 
             tx = tx.Sign(key);
@@ -383,7 +387,7 @@ namespace NeoLux
          * @param {{NEO: number, GAS: number}} amount - The amount of each asset (NEO and GAS) to send, leave empty for 0.
          * @return {Promise<Response>} RPC Response
          */
-        public static DataNode doSendAsset(Net net, string toAddress, string fromWif, decimal assetAmounts)
+        public static DataNode SendAsset(Net net, string toAddress, string fromWif, decimal assetAmounts)
         {
             throw new NotImplementedException();
             /*
@@ -496,7 +500,7 @@ namespace NeoLux
         public static decimal getClaimAmounts(Net net, string address)
         {
             var apiEndpoint = getAPIEndpoint(net);
-            var response = RequestUtils.Request(RequestType.GET, apiEndpoint+ "/v2/address/claims/" + address);
+            var response = RequestUtils.Request(RequestType.GET, apiEndpoint + "/v2/address/claims/" + address);
             return response.GetDecimal("total_claim");
             //return (available: parseInt(res.data.total_claim), unavailable: parseInt(res.data.total_unspent_claim));
         }
@@ -560,7 +564,7 @@ namespace NeoLux
             jsonRpcData.AddField("method", method);
             jsonRpcData.AddNode(paramData);
             jsonRpcData.AddField("id", id);
-            jsonRpcData.AddField("jsonrpc", "2.0" );
+            jsonRpcData.AddField("jsonrpc", "2.0");
 
             var rpcEndpoint = getRPCEndpoint(net);
             var response = RequestUtils.Request(RequestType.POST, rpcEndpoint, jsonRpcData);
@@ -568,6 +572,6 @@ namespace NeoLux
             return response;
         }
 
-}
+    }
 
 }
