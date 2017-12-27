@@ -66,5 +66,10 @@ namespace NeoLux.Core
         {
             return !(left == right);
         }
+
+        public override int GetHashCode()
+        {
+            return data_bytes.GetHashCode();
+        }
     }
 }
