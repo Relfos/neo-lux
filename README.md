@@ -1,9 +1,20 @@
 # NEO Lux
 NEO lightwallet / blockchain API for C#.
 
-NEO Lux was developed to provide an easy way to interact with smart contracts in the NEO blockchain. 
+NEO Lux was developed to provide an easy way to interact with smart contracts in the NEO blockchain using C#. 
 
 A full node is not necessary but you can also have one running locally and connect to it using NEO Lux.
+
+## Compatibility
+
+Platform | Status
+------------ | -------------
+.NET framework | Working
+UWP | Working
+Mono | Working
+Xamarin / Mobile | Untested
+Unity | Untested
+
 
 ## Installation
 
