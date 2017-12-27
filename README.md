@@ -37,9 +37,10 @@ For getting balance of an address:
 	}
 ```
 
-# Notes
+# TODO
 
-
+* Sending assets to address (GAS and NEO)
+* NEP5 token support
 
 # Credits and License
 
