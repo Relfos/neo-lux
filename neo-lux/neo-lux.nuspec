@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>NeoLux</id>
+    <version>0.1.2</version>
+    <title>Neo.Lux</title>
+    <authors>Sérgio Flores</authors>
+    <owners>Sérgio Flores</owners>
+    <projectUrl>https://github.com/CityOfZion/neo-lux</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>NEO lightwallet / blockchain API for C#. Allows you to interact with smart contracts in the NEO blockchain.</description>
+    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>Tag1 Tag2</tags>
+  </metadata>
+</package>
