@@ -91,6 +91,12 @@ namespace NeoLux
             return invoke;
         }
 
+        public static InvokeResult TestInvokeScript(Net net, string scriptHash, string operation, object[] args)
+        {
+            var bytes = GenerateScript(scriptHash, operation, args);
+            return TestInvokeScript(net, bytes);
+        }
+
 
         private static Transaction Sign(this Transaction transaction, KeyPair key)
         {
