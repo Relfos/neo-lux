@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neo-lux-experimental", "neo-lux-experimental\neo-lux-experimental.csproj", "{BF967BC2-A051-421B-B7A0-8105975F95D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neo-lux", "neo-lux\neo-lux.csproj", "{B3AAA0D3-304E-4408-A052-E3E8A8FA2006}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neo.Lux", "neo-lux\Neo.Lux.csproj", "{B3AAA0D3-304E-4408-A052-E3E8A8FA2006}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neo-lux-demo", "neo-lux-demo\neo-lux-demo.csproj", "{3C5A33B0-C015-4670-BC38-283DA680CC27}"
 EndProject

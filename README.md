@@ -48,6 +48,16 @@ For getting balance of an address:
 	}
 ```
 
+# Console demo
+
+A console program is included to demonstrate common features:
++ Loading private keys
++ Obtaining wallet address from private key
++ Query balance from an address
++ Invoking a NEP5 smart contract (query symbol and total supply)
+
+![Inputs Screenshot](images/console_demo.jpg)
+
 # Unity support
 
 NEOLux can be used together with Unity to make games that interact with the NEO blockchain.
