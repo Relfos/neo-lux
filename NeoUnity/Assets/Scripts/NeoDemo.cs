@@ -41,7 +41,6 @@ public class NeoDemo : MonoBehaviour {
         this.balanceLabel.text = "Please wait, syncing balance...";        
     }
 
-
     IEnumerator SyncBalance()
     {
         yield return new WaitForSeconds(2);

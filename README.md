@@ -13,7 +13,7 @@ Platform | Status
 UWP | Working
 Mono | Working
 Xamarin / Mobile | Untested
-Unity | Untested
+Unity | Working
 
 
 ## Installation
@@ -47,6 +47,25 @@ For getting balance of an address:
 		Console.WriteLine(entry.Key + " => " + entry.Value);
 	}
 ```
+
+# Unity support
+
+NEOLux can be used together with Unity to make games that interact with the NEO blockchain.
+A Unity demo showcasing loading a NEO wallet and querying the balance is included.
+
+Careful as most NEOLux methods are blocking calls, in Unity the proper way to call them is using [Coroutines](https://docs.unity3d.com/Manual/Coroutines.html).
+```c#
+    IEnumerator SyncBalance()
+    {
+        var balances = NeoAPI.GetBalance(NeoAPI.Net.Test, this.keys.address);
+        this.balance = balances["NEO"];
+    }
+	
+	// then you call the method like this
+	StartCoroutine(SyncBalance());
+```
+
+![Inputs Screenshot](images/neo_unity.jpg)
 
 # TODO
 
