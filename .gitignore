@@ -4,3 +4,6 @@ neo-lux/bin/
 neo-lux/obj/
 .vs/
 neo-lux-demo/obj/
+NeoUnity/Library/
+NeoUnity/Temp/
+NeoUnity/UnityPackageManager/

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>b3aaa0d3-304e-4408-a052-e3e8a8fa2006</ProjectGuid>
+    <ProjectGuid>{B3AAA0D3-304E-4408-A052-E3E8A8FA2006}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NeoLux</RootNamespace>
@@ -31,11 +31,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LunarParser, Version=1.0.17.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\LunarParser.1.0.17\lib\net45\LunarParser.dll</HintPath>
+    <Reference Include="LunarParser, Version=1.0.24.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LunarParser.1.0.24\lib\net45\LunarParser.dll</HintPath>
     </Reference>
-    <Reference Include="Neo.VM, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Neo.VM.2.0.3\lib\net461\Neo.VM.dll</HintPath>
+    <Reference Include="NEO-Emulator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Neo.Emulator.0.3.0\lib\net461\NEO-Emulator.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,20 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API.cs" />
-    <Compile Include="Core\Fixed8.cs" />
-    <Compile Include="Core\Request.cs" />
-    <Compile Include="Core\UInt160.cs" />
-    <Compile Include="Core\UInt256.cs" />
-    <Compile Include="Core\UIntBase.cs" />
-    <Compile Include="Cryptography\Base58.cs" />
-    <Compile Include="Cryptography\Crypto.cs" />
-    <Compile Include="Cryptography\ECCurve.cs" />
-    <Compile Include="Cryptography\ECDsa.cs" />
-    <Compile Include="Cryptography\ECFieldElement.cs" />
-    <Compile Include="Cryptography\ECPoint.cs" />
-    <Compile Include="Cryptography\RIPEMD160Managed.cs" />
     <Compile Include="Helper.cs" />
-    <Compile Include="KeyPair.cs" />
+    <Compile Include="Request.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

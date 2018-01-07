@@ -108,18 +108,6 @@ namespace NeoLux
             throw new Exception();
         }
 
-        public static byte[] HexToBytes(this string value)
-        {
-            if (value == null || value.Length == 0)
-                return new byte[0];
-            if (value.Length % 2 == 1)
-                throw new FormatException();
-            byte[] result = new byte[value.Length / 2];
-            for (int i = 0; i < result.Length; i++)
-                result[i] = byte.Parse(value.Substring(i * 2, 2), NumberStyles.AllowHexSpecifier);
-            return result;
-        }
-
         internal static BigInteger Mod(this BigInteger x, BigInteger y)
         {
             x %= y;
@@ -173,24 +161,6 @@ namespace NeoLux
             else
                 b[b.Length - 1] &= (byte)((1 << sizeInBits % 8) - 1);
             return new BigInteger(b);
-        }
-
-        public static Fixed8 Sum(this IEnumerable<Fixed8> source)
-        {
-            long sum = 0;
-            checked
-            {
-                foreach (Fixed8 item in source)
-                {
-                    sum += item.value;
-                }
-            }
-            return new Fixed8(sum);
-        }
-
-        public static Fixed8 Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, Fixed8> selector)
-        {
-            return source.Select(selector).Sum();
         }
 
         internal static bool TestBit(this BigInteger i, int index)

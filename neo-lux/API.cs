@@ -4,8 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-using NeoLux.Cryptography;
+using Neo.Cryptography;
 using Neo.VM;
+using Neo.Emulator.Utils;
 
 namespace NeoLux
 {
