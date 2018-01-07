@@ -31,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LunarParser, Version=1.0.24.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\LunarParser.1.0.24\lib\net45\LunarParser.dll</HintPath>
+    <Reference Include="LunarParser, Version=1.0.28.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LunarParser.1.0.28\lib\net45\LunarParser.dll</HintPath>
     </Reference>
     <Reference Include="NEO-Emulator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Neo.Emulator.0.3.0\lib\net461\NEO-Emulator.dll</HintPath>
