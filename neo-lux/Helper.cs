@@ -1,4 +1,5 @@
-﻿using Neo.VM;
+﻿using Neo.Cryptography;
+using Neo.VM;
 using NeoLux.Core;
 using System;
 using System.Collections.Generic;
@@ -287,5 +288,20 @@ namespace NeoLux
                 yield return resultSelector(item, weight);
             }
         }
+
+        public static T[] SubArray<T>(this T[] data, int index, int length)
+        {
+            T[] result = new T[length];
+            Array.Copy(data, index, result, 0, length);
+            return result;
+        }
+
+        public static byte[] GetScriptHashFromAddress(this string address)
+        {
+            var temp = address.Base58CheckDecode();
+            temp = temp.SubArray(1, 20);
+            return temp;
+        }
+
     }
 }

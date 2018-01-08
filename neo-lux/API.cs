@@ -7,15 +7,51 @@ using System.Linq;
 using Neo.Cryptography;
 using Neo.VM;
 using Neo.Emulator.Utils;
+using System.Numerics;
 
 namespace NeoLux
 {
+    public class NeoException : Exception
+    {
+        public NeoException(string msg) : base (msg)
+        {
+
+        }
+    }
+
     public static class NeoAPI
     {
         public enum Net
         {
             Main,
             Test
+        }
+
+        public struct TokenInfo
+        {
+            public string scriptHash;
+            public int decimals;
+        }
+
+        private static Dictionary<string, TokenInfo> _tokens = null;
+
+        internal static Dictionary<string, TokenInfo> GetTokenInfo()
+        {
+            if (_tokens == null)
+            {
+                _tokens = new Dictionary<string, TokenInfo>();
+                AddToken("RPX", "ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9", 8);
+                AddToken("DBC", "b951ecbbc5fe37a9c280a76cb0ce0014827294cf", 8);
+                AddToken("QLC", "0d821bd7b6d53f5c2b40e217c6defc8bbe896cf5", 8);
+                AddToken("APH", "a0777c3ce2b169d4a23bcba4565e3225a0122d95", 8);
+            }
+
+            return _tokens;
+        }
+
+        private static void AddToken(string symbol, string hash, int decimals)
+        {
+            _tokens[symbol] = new TokenInfo() { scriptHash = hash, decimals = decimals };
         }
 
         // hard-code asset ids for NEO and GAS
@@ -48,8 +84,8 @@ namespace NeoLux
 
                         case "Integer":
                             {
-                                int intVal;
-                                int.TryParse(val, out intVal);
+                                BigInteger intVal;
+                                BigInteger.TryParse(val, out intVal);
                                 return intVal;
                             }
 
@@ -96,7 +132,6 @@ namespace NeoLux
             var bytes = GenerateScript(scriptHash, operation, args);
             return TestInvokeScript(net, bytes);
         }
-
 
         private static Transaction Sign(this Transaction transaction, KeyPair key)
         {
@@ -158,7 +193,7 @@ namespace NeoLux
 
             if (!unspent.ContainsKey("GAS"))
             {
-                throw new Exception("Not GAS available");
+                throw new NeoException("Not GAS available");
             }
 
             var sources = unspent["GAS"];
@@ -198,7 +233,7 @@ namespace NeoLux
 
             if (selectedGas < gasCost)
             {
-                throw new Exception("Not enough GAS");
+                throw new NeoException("Not enough GAS");
             }
 
             if (selectedGas > gasCost)
@@ -435,7 +470,7 @@ namespace NeoLux
          * @param {string} address - Address to check.
          * @return {Promise<Balance>} Balance of address
          */
-        public static Dictionary<string, decimal> GetBalance(Net net, string address)
+        public static Dictionary<string, decimal> GetBalance(Net net, string address, bool getTokens = false)
         {
             var apiEndpoint = getAPIEndpoint(net);
             var url = apiEndpoint + "/v2/address/balance/" + address;
@@ -446,10 +481,49 @@ namespace NeoLux
             {
                 if (node.HasNode("balance"))
                 {
-                    result[node.Name] = node.GetDecimal("balance");
+                    var balance = node.GetDecimal("balance");
+                    if (balance>0)
+                    {
+                        result[node.Name] = balance;
+                    }
                 }
             }
+
+            if (net == Net.Main && getTokens)
+            {
+                var info = GetTokenInfo();
+                foreach (var symbol in info.Keys)
+                {
+                    var balance = GetTokenBalance(address, symbol);
+                    if (balance>0)
+                    {
+                        result[symbol] = balance;
+                    }
+                }
+            }
+
             return result;
+        }
+
+        // FIXME - I'm almost sure that this code won't return non-integer balances correctly...
+        public static decimal GetTokenBalance(string address, string symbol)
+        {
+            var info = GetTokenInfo();
+            if (info.ContainsKey(symbol))
+            {
+                var token = info[symbol];
+                var response = NeoAPI.TestInvokeScript(NeoAPI.Net.Main, token.scriptHash, "balanceOf", new object[] { address.GetScriptHashFromAddress() });
+                var balance = new BigInteger((byte[])response.result);
+                var decimals = token.decimals;
+                while (decimals > 0)
+                {
+                    balance /= 10;
+                    decimals--;
+                }
+                return (decimal) balance;
+            }
+
+            throw new NeoException("Invalid token symbol");
         }
 
         public struct UnspentEntry
