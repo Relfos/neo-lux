@@ -1,19 +1,44 @@
-# NEO Lux
-NEO lightwallet / blockchain API for C#.
+<p align="center">
+  <img
+    src="http://res.cloudinary.com/vidsy/image/upload/v1503160820/CoZ_Icon_DARKBLUE_200x178px_oq0gxm.png"
+    width="125px"
+  >
+</p>
 
-NEO Lux was developed to provide an easy way to interact with smart contracts in the NEO blockchain using C#. 
+<h1 align="center">NEO Lux</h1>
 
-A full node is not necessary but you can also have one running locally and connect to it using NEO Lux.
+<p align="center">
+  NEO lightwallet / blockchain API for C#.
+</p>
+
+## Contents
+
+- [Description](#description)
+- [Compatibility](#compatibility)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Console Demo](#console-demo)
+- [Unity Support](#unity-support)
+- [TODO](#todo)
+- [Credits and License](#credits-and-license)
+
+---
+
+## Description
+
+**NEO Lux** was developed to provide an easy way to interact with Smart Contracts in the NEO blockchain using C#. 
+
+A full node is not necessary, but you can have one running locally and connect to it using NEO Lux.
 
 ## Compatibility
 
-Platform | Status
------------- | -------------
-.NET framework | Working
-UWP | Working
-Mono | Working
-Xamarin / Mobile | Untested
-Unity | Working
+Platform 		| Status
+:---------------------- | :------------
+.NET framework 		| Working
+UWP 			| Working
+Mono 			| Working
+Xamarin / Mobile 	| Untested
+Unity 			| Working
 
 
 ## Installation
@@ -28,7 +53,7 @@ Import the package:
 using NeoLux;
 ```
 
-For invoking a smart contract, eg:
+For invoking a Smart Contract, e.g.:
 
 ```c#
 	var privKey = "XXXXXXXXXXXXXXXXprivatekeyhereXXXXXXXXXXX".HexToBytes();	 // can be any valid private key
@@ -38,7 +63,7 @@ For invoking a smart contract, eg:
 	var result = NeoAPI.CallContract(NeoAPI.Net.Test, key, scriptHash, "registerMailbox", new object[] { "ABCDE", "demo@phantasma.io" });
 ```
 
-For getting balance of an address:
+For getting the balance of an address:
 
 ```c#
 	var balances = NeoAPI.GetBalance(NeoAPI.Net.Test, "AYpY8MKiJ9q5Fpt4EeQQmoYRHxdNHzwWHk");
@@ -48,22 +73,22 @@ For getting balance of an address:
 	}
 ```
 
-# Console demo
+# Console Demo
 
 A console program is included to demonstrate common features:
 + Loading private keys
 + Obtaining wallet address from private key
 + Query balance from an address
-+ Invoking a NEP5 smart contract (query symbol and total supply)
++ Invoking a NEP5 Smart Contract (query symbol and total supply)
 
 ![Inputs Screenshot](images/console_demo.jpg)
 
-# Unity support
+# Unity Support
 
 NEOLux can be used together with Unity to make games that interact with the NEO blockchain.
 A Unity demo showcasing loading a NEO wallet and querying the balance is included.
 
-Careful as most NEOLux methods are blocking calls, in Unity the proper way to call them is using [Coroutines](https://docs.unity3d.com/Manual/Coroutines.html).
+Use caution, as most NEOLux methods are blocking calls; in Unity the proper way to call them is using [Coroutines](https://docs.unity3d.com/Manual/Coroutines.html).
 ```c#
     IEnumerator SyncBalance()
     {
@@ -71,7 +96,7 @@ Careful as most NEOLux methods are blocking calls, in Unity the proper way to ca
         this.balance = balances["NEO"];
     }
 	
-	// then you call the method like this
+	// Then you call the method like this
 	StartCoroutine(SyncBalance());
 ```
 
@@ -86,7 +111,7 @@ Careful as most NEOLux methods are blocking calls, in Unity the proper way to ca
 
 Created by Sérgio Flores (<http://lunarlabs.pt/>).
 
-Credits also go to the other devs from City Of Zion(<http://cityofzion.io/>), as this projected started as a port of code from their [NEON wallet](https://github.com/CityOfZion/neon-wallet) from Javascript to C#.
-And of course, to the NEO team(<http://neo.org>), as I also used some code from their [NEO source](https://github.com/neo-project/neo).
+Credits also go to the other devs of City Of Zion(<http://cityofzion.io/>), as this project started as a port of code from their [NEON wallet](https://github.com/CityOfZion/neon-wallet) from Javascript to C#.
+Of course, credits also go to the NEO team(<http://neo.org>), as I also used some code from their [NEO source](https://github.com/neo-project/neo).
 
 This project is released under the MIT license, see `LICENSE.md` for more details.
