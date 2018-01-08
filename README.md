@@ -8,7 +8,7 @@
 <h1 align="center">NEO Lux</h1>
 
 <p align="center">
-  NEO lightwallet / blockchain API for C#.
+  NEO light wallet / blockchain API for C#.
 </p>
 
 ## Contents
