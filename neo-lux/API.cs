@@ -179,6 +179,96 @@ namespace NeoLux
             return CallContract(net, key, scriptHash, bytes);
         }
 
+        private static void GenerateInputsOutputs(Net net, KeyPair key, string outputHash, Dictionary<string, decimal> ammounts, out List<Transaction.Input> inputs, out List<Transaction.Output> outputs)
+        {
+            if (ammounts == null || ammounts.Count == 0)
+            {
+                throw new NeoException("Invalid amount list");
+            }
+
+            //var outputHash = toAddress.GetScriptHashFromAddress().ToHexString();
+            
+            var unspent = GetUnspent(net, key.address);
+
+            inputs = new List<Transaction.Input>();
+            outputs = new List<Transaction.Output>();
+
+            foreach (var entry in ammounts)
+            {
+                var symbol = entry.Key;
+
+                if (!unspent.ContainsKey(symbol))
+                {
+                    throw new NeoException($"Not enough {symbol} in address {key.address}");
+                }
+            }
+
+            foreach (var entry in ammounts)
+            {
+                var symbol = entry.Key;
+                var cost = entry.Value;
+
+                string assetID;
+
+                switch (symbol)
+                {
+                    case "GAS": assetID = gasId; break;
+                    case "NEO": assetID = neoId; break;
+                    default:
+                        {
+                            throw new NeoException($"{symbol} is not a valid blockchain asset.");
+                        }
+                }
+
+                var sources = unspent[symbol];
+
+                decimal selected = 0;
+                foreach (var src in sources)
+                {
+                    selected += src.value;
+
+                    var input = new Transaction.Input()
+                    {
+                        prevHash = src.txid,
+                        prevIndex = src.index,
+                    };
+
+                    inputs.Add(input);
+
+                    if (selected >= cost)
+                    {
+                        break;
+                    }
+                }
+
+                if (selected < cost)
+                {
+                    throw new NeoException($"Not enough {symbol}");
+                }
+
+                var output = new Transaction.Output()
+                {
+                    assetID = assetID,
+                    scriptHash = outputHash,
+                    value = cost
+                };
+                outputs.Add(output);
+
+                if (selected > cost)
+                {
+                    var left = selected - cost;
+
+                    var change = new Transaction.Output()
+                    {
+                        assetID = assetID,
+                        scriptHash = reverseHex(key.signatureHash.ToArray().ByteToHex()),
+                        value = left
+                    };
+                    outputs.Add(change);
+                }
+            }
+        }
+
         public static bool CallContract(Net net, KeyPair key, string scriptHash, byte[] bytes)
         {
             /*var invoke = TestInvokeScript(net, bytes);
@@ -189,65 +279,12 @@ namespace NeoLux
 
             decimal gasCost = invoke.gasSpent;*/
 
-            var unspent = GetUnspent(net, key.address);
 
-            if (!unspent.ContainsKey("GAS"))
-            {
-                throw new NeoException("Not GAS available");
-            }
-
-            var sources = unspent["GAS"];
-
-
-            var outputs = new List<Transaction.Output>();
-            /*var output = new Transaction.Output()
-            {
-                assetID = gasId,
-                scriptHash = outputHash,
-                value = gasCost
-            };
-            outputs.Add(output);*/
-
+            List<Transaction.Input> inputs;
+            List<Transaction.Output> outputs;
             var gasCost = 0;
 
-            var inputs = new List<Transaction.Input>();
-
-            decimal selectedGas = 0;
-            foreach (var src in sources)
-            {
-                selectedGas += src.value;
-
-                var input = new Transaction.Input()
-                {
-                    prevHash = src.txid,
-                    prevIndex = src.index,
-                };
-
-                inputs.Add(input);
-
-                if (selectedGas >= gasCost)
-                {
-                    break;
-                }
-            }
-
-            if (selectedGas < gasCost)
-            {
-                throw new NeoException("Not enough GAS");
-            }
-
-            if (selectedGas > gasCost)
-            {
-                var left = selectedGas - gasCost;
-
-                var change = new Transaction.Output()
-                {
-                    assetID = gasId,
-                    scriptHash = reverseHex(key.signatureHash.ToArray().ByteToHex()),
-                    value = left
-                };
-                outputs.Add(change);
-            }
+            GenerateInputsOutputs(net, key, scriptHash, new Dictionary<string, decimal>() { { "GAS", gasCost } }, out inputs, out outputs);
 
             Transaction tx = new Transaction()
             {
@@ -257,11 +294,9 @@ namespace NeoLux
                 gas = gasCost,
                 inputs = inputs.ToArray(),
                 outputs = outputs.ToArray()
-
             };
 
             //File.WriteAllBytes("output2.avm", bytes);
-
 
             tx = tx.Sign(key);
 
@@ -372,11 +407,14 @@ namespace NeoLux
             result.Append(num2hexstring(tx.version));
 
             // excluusive data
-            result.Append(num2VarInt(tx.script.Length));
-            result.Append(tx.script.ToHexString());
-            if (tx.version >= 1)
+            if (tx.version == 0xd1)
             {
-                result.Append(num2fixed8(tx.gas));
+                result.Append(num2VarInt(tx.script.Length));
+                result.Append(tx.script.ToHexString());
+                if (tx.version >= 1)
+                {
+                    result.Append(num2fixed8(tx.gas));
+                }
             }
 
             // Don't need any attributes
@@ -421,17 +459,37 @@ namespace NeoLux
             return QueryRPC(net, "getstorage", new object[] { scriptHash, key });
         }
 
-        /**
-         * Send an asset to an address
-         * @param {string} net - 'MainNet' or 'TestNet'.
-         * @param {string} toAddress - The destination address.
-         * @param {string} fromWif - The WIF key of the originating address.
-         * @param {{NEO: number, GAS: number}} amount - The amount of each asset (NEO and GAS) to send, leave empty for 0.
-         * @return {Promise<Response>} RPC Response
-         */
-        public static DataNode SendAsset(Net net, string toAddress, string fromWif, decimal assetAmounts)
+        public static bool SendAsset(Net net, string toAddress, string symbol, decimal amount, KeyPair key)
         {
-            throw new NotImplementedException();
+            return SendAsset(net, toAddress, new Dictionary<string, decimal>() { {symbol, amount }}, key);
+        }
+
+        public static bool SendAsset(Net net, string toAddress, Dictionary<string, decimal> amounts, KeyPair key)
+        {
+            List<Transaction.Input> inputs;
+            List<Transaction.Output> outputs;
+
+            var scriptHash = reverseHex(toAddress.GetScriptHashFromAddress().ToHexString());
+            GenerateInputsOutputs(net, key, scriptHash, amounts, out inputs, out outputs);
+
+            Transaction tx = new Transaction()
+            {
+                type = 128,
+                version = 0,
+                script = null,
+                gas = -1,
+                inputs = inputs.ToArray(),
+                outputs = outputs.ToArray()
+            };
+            
+            tx = tx.Sign(key);
+
+            var hexTx = SerializeTransaction(tx, true);
+
+            var response = QueryRPC(net, "sendrawtransaction", new object[] { hexTx });
+
+            return response.GetBool("result");
+
             /*
             var account = getAccountFromWIFKey(fromWif);
             var toScriptHash = getScriptHashFromAddress(toAddress);
@@ -533,7 +591,7 @@ namespace NeoLux
             public decimal value;
         }
 
-        public static Dictionary<string, List<UnspentEntry>> GetUnspent(Net net, string address)
+        internal static Dictionary<string, List<UnspentEntry>> GetUnspent(Net net, string address)
         {
             var apiEndpoint = getAPIEndpoint(net);
             var url = apiEndpoint + "/v2/address/balance/" + address;
