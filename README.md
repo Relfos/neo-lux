@@ -57,10 +57,19 @@ For invoking a Smart Contract, e.g.:
 
 ```c#
 	var privKey = "XXXXXXXXXXXXXXXXprivatekeyhereXXXXXXXXXXX".HexToBytes();	 // can be any valid private key
-	var key = new KeyPair(privKey);
+	var myKeys = new KeyPair(privKey);
 	var scriptHash = "de1a53be359e8be9f3d11627bcca40548a2d5bc1"; // the scriptHash of the smart contract you want to use	
 	// for now, contracts must be in the format Main(string operation, object[] args)
-	var result = NeoAPI.CallContract(NeoAPI.Net.Test, key, scriptHash, "registerMailbox", new object[] { "ABCDE", "demo@phantasma.io" });
+	var result = NeoAPI.CallContract(NeoAPI.Net.Test, myKeys, scriptHash, "registerMailbox", new object[] { "ABCDE", "demo@phantasma.io" });
+```
+
+For transfering assets (NEO or GAS), e.g.:
+
+```c#
+	var privKey = "XXXXXXXXXXXXXXXXprivatekeyhereXXXXXXXXXXX".HexToBytes();	 // can be any valid private key
+	var myKeys = new KeyPair(privKey);
+	// WARNING: For now use test net only, this code is experimental, you could lose real assets if using main net
+	var result = NeoAPI.SendAsset(NeoAPI.Net.Test, "AanTL6pTTEdnphXpyPMgb7PSE8ifSWpcXU" /*destination address*/, "GAS", 3 /*amount to send */ , myKeys);
 ```
 
 For getting the balance of an address:
