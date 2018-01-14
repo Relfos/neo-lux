@@ -14,9 +14,9 @@ namespace neo_sender
                 return;
             }
 
-            var net = Enum.Parse(typeof(NeoAPI.Net), args[0], true);
+            var net = (NeoAPI.Net) Enum.Parse(typeof(NeoAPI.Net), args[0], true);
 
-            var privKey = args[1].HexToBytes();
+            var keyStr = args[1];
             //fc1fa7c0d83426486373d9ce6eaca8adb506fc4ca25e89887c8eb5567f317a53"
             var outputAddress = args[2];
             //"AanTL6pTTEdnphXpyPMgb7PSE8ifSWpcXU"
@@ -24,8 +24,8 @@ namespace neo_sender
             var symbol = args[3];   //"GAS"
             var amount = decimal.Parse(args[4]);
 
-            var myKey = new KeyPair(privKey);
-            NeoAPI.SendAsset(NeoAPI.Net.Test, outputAddress, symbol, amount, myKey);
+            var myKey = keyStr.Length == 52 ? KeyPair.FromWIF(keyStr) : new KeyPair(keyStr.HexToBytes());
+            NeoAPI.SendAsset(net, outputAddress, symbol, amount, myKey);
             Console.ReadKey();
         }
     }
