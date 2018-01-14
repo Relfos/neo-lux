@@ -109,6 +109,12 @@ Use caution, as most NEOLux methods are blocking calls; in Unity the proper way 
 	StartCoroutine(SyncBalance());
 ```
 
+## Using with Unity
+
+Don't drop the source code of NEOLux inside Unity, it won't work. Instead of the provided .UnityPackage file to install it (or use the included Demo project as a template for your project).
+
+If you have weird compilation errors inside Unity, try the project "Api Compatibility Level" to .NET 4.6.
+
 ![Inputs Screenshot](images/neo_unity.jpg)
 
 # TODO
