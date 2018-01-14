@@ -25,8 +25,11 @@ namespace neo_sender
             var amount = decimal.Parse(args[4]);
 
             var myKey = keyStr.Length == 52 ? KeyPair.FromWIF(keyStr) : new KeyPair(keyStr.HexToBytes());
-            NeoAPI.SendAsset(net, outputAddress, symbol, amount, myKey);
-            Console.ReadKey();
+
+            Console.WriteLine($"Sending {amount} {symbol} from {myKey.address} to {outputAddress}");
+
+            var result = NeoAPI.SendAsset(net, outputAddress, symbol, amount, myKey);
+            Console.WriteLine(result);
         }
     }
 }
