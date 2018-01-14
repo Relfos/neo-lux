@@ -8,3 +8,5 @@ NeoUnity/Library/
 NeoUnity/Temp/
 NeoUnity/UnityPackageManager/
 neo-lux-experimental/
+neo-sender/bin/
+neo-sender/obj/
