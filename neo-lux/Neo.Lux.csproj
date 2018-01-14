@@ -35,7 +35,7 @@
       <HintPath>..\packages\LunarParser.1.0.28\lib\net45\LunarParser.dll</HintPath>
     </Reference>
     <Reference Include="NEO-Emulator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Neo.Emulator.0.4.0\lib\net461\NEO-Emulator.dll</HintPath>
+      <HintPath>..\packages\Neo.Emulator.0.5.0\lib\net461\NEO-Emulator.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
