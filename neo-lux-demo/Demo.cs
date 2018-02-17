@@ -12,7 +12,7 @@ namespace neo_lux_demo
         static void Main(string[] args)
         {
             // NOTE - You can also create an API instance for a specific private net
-            var api = NeoRPC.ForMainNet();
+            var api = NeoRPC.ForTestNet();
 
             // NOTE - Private keys should not be hardcoded in the code, this is just for demonstration purposes!
             var privateKey = "a9e2b5436cab6ff74be2d5c91b8a67053494ab5b454ac2851f872fb0fd30ba5e";
@@ -23,7 +23,7 @@ namespace neo_lux_demo
 
             // it is possible to optionally obtain also token balances with this method
             Console.WriteLine("*Syncing balances...");
-            var balances = api.GetBalance(keys.address, false);
+            var balances = api.GetBalancesOf(keys.address, false);
             foreach (var entry in balances)
             {
                 Console.WriteLine(entry.Value + " " + entry.Key);
@@ -33,7 +33,7 @@ namespace neo_lux_demo
             // NEP5 https://github.com/neo-project/proposals/issues/3
             var redPulse_contractHash = "ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9";
 
-            var redPulse = new NEP5(api, redPulse_contractHash);
+            var redPulse = new NEP5(NeoRPC.ForMainNet(), redPulse_contractHash);
 
             Console.WriteLine("*Querying Symbol from RedPulse contract...");
             //var response = api.TestInvokeScript(redPulse_contractHash, "symbol", new object[] { "" });

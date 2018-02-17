@@ -85,6 +85,7 @@ namespace NeoLux
             return BalanceOf(address.GetScriptHashFromAddress());
         }
 
+        // FIXME - I'm almost sure that this code won't return non-integer balances correctly...
         public decimal BalanceOf(byte[] addressHash)
         {
             var response = api.TestInvokeScript(contractHash, "balanceOf", new object[] { addressHash });
@@ -98,15 +99,24 @@ namespace NeoLux
             return (decimal)balance;
         }
 
-        public bool Transfer(KeyPair from_key, string to_address, BigInteger value)
+        public bool Transfer(KeyPair from_key, string to_address, decimal value)
         {
             return Transfer(from_key, to_address.GetScriptHashFromAddress(), value);
         }
 
-        public bool Transfer(KeyPair from_key, byte[] to_address_hash, BigInteger value)
+        public bool Transfer(KeyPair from_key, byte[] to_address_hash, decimal value)
         {
+            var decs = this.Decimals;
+            while (decs > 0)
+            {
+                value *= 10;
+                decs--;
+            }
+
+            BigInteger amount = new BigInteger((ulong)value);
+
             var sender_address_hash = from_key.address.GetScriptHashFromAddress();
-            var response = api.CallContract(from_key, contractHash, "balanceOf", new object[] { sender_address_hash, to_address_hash, value });
+            var response = api.CallContract(from_key, contractHash, "balanceOf", new object[] { sender_address_hash, to_address_hash, amount });
             return response;
         }
     }

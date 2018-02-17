@@ -64,7 +64,7 @@ namespace NeoLux
             return hex.HexToBytes();
         }
 
-        public override Dictionary<string, decimal> GetBalance(string address, bool getTokens = false)
+        public override Dictionary<string, decimal> GetBalancesOf(string address, bool getTokens = false)
         {
             var url = apiEndpoint + "/v2/address/balance/" + address;
             var response = RequestUtils.Request(RequestType.GET, url);
@@ -87,7 +87,8 @@ namespace NeoLux
                 var info = GetTokenInfo();
                 foreach (var symbol in info.Keys)
                 {
-                    var balance = GetTokenBalance(address, symbol);
+                    var token = GetToken(symbol);
+                    var balance = token.BalanceOf(address);
                     if (balance > 0)
                     {
                         result[symbol] = balance;
