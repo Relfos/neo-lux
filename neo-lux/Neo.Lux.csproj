@@ -51,10 +51,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API.cs" />
+    <Compile Include="LuxUtils.cs" />
+    <Compile Include="NeoAPI.cs" />
     <Compile Include="Helper.cs" />
+    <Compile Include="NeoEmulator.cs" />
+    <Compile Include="NeoRPC.cs" />
+    <Compile Include="NEP5.cs" />
     <Compile Include="Request.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transaction.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

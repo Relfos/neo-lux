@@ -117,11 +117,6 @@ If you have weird compilation errors inside Unity, try the project "Api Compatib
 
 ![Inputs Screenshot](images/neo_unity.jpg)
 
-# TODO
-
-* Sending assets to address (GAS and NEO)
-* NEP5 token support
-
 # Credits and License
 
 Created by Sérgio Flores (<http://lunarlabs.pt/>).
