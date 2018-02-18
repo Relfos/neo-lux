@@ -29,7 +29,7 @@
 
 **NEO Lux** was developed to provide an easy way to interact with Smart Contracts in the NEO blockchain using C#. 
 
-A full node is not necessary, but you can have one running locally and connect to it using NEO Lux.
+It is not necessary to run a full node, because NEO Lux connects to [Neon DB](https://github.com/CityOfZion/neon-wallet-db), which is the same API used by the [Neon wallet](https://github.com/CityOfZion/neon-wallet/).
 
 ## Compatibility
 

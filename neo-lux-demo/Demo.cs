@@ -27,9 +27,13 @@ namespace NeoLux.Demo
 
             // TestInvokeScript let's us call a smart contract method and get back a result
             // NEP5 https://github.com/neo-project/proposals/issues/3
-            var redPulse_contractHash = "ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9";
 
-            var redPulse = new NEP5(NeoRPC.ForMainNet(), redPulse_contractHash);
+            api = NeoRPC.ForMainNet();
+            var redPulse = api.GetToken("RPX");
+
+            // you could also create a NEP5 from a contract script hash
+            //var redPulse_contractHash = "ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9";
+            //var redPulse = new NEP5(api, redPulse_contractHash);
 
             Console.WriteLine("*Querying Symbol from RedPulse contract...");
             //var response = api.TestInvokeScript(redPulse_contractHash, "symbol", new object[] { "" });
