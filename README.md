@@ -87,7 +87,11 @@ For getting the balance of an address:
 	}
 ```
 
-For interaction with a NEP5 token:
+# NEP5 Token support
+
+Neo-Lux allows to abstract interaction with Neo tokens via the NEP5 C# class.
+
+Here's an example of interaction with a NEP5 token:
 
 ```c#
 	var api = NeoRPC.ForMainNet(); 
