@@ -95,8 +95,7 @@ Here's an example of interaction with a NEP5 token:
 
 ```c#
 	var api = NeoRPC.ForMainNet(); 
-	var redPulse_contractHash = "ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9";
-	var redPulse_token = new NEP5(api, redPulse_contractHash);
+	var redPulse_token = api.GetToken("RPX");	
 	Console.WriteLine($"{redPulse_token.Name} ({redPulse_token.Symbol})");
 	Console.WriteLine($"Total Supply: {redPulse_token.TotalSupply} ({redPulse_token.Symbol})");
 	
@@ -105,6 +104,16 @@ Here's an example of interaction with a NEP5 token:
 	var myKeys = new KeyPair(privKey);
 	redPulse_token.Transfer(myKeys, "AanTL6pTTEdnphXpyPMgb7PSE8ifSWpcXU" /*destination*/, 123 /*amount to send*/); 
 ```
+
+You can also instantiate a NEP5 token from a script hash.
+
+Look up the script hashes [here](https://neotracker.io/browse/asset/1) or use your own if you're developing your own NEP5 token.
+
+```c#
+	var api = NeoRPC.ForMainNet(); 	
+	var redPulse_contractHash = "ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9";
+	var redPulse_token = new NEP5(api, redPulse_contractHash);
+```	
 
 # Console Demo
 
