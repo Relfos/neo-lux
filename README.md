@@ -114,8 +114,11 @@ A console program is included to demonstrate common features:
 # Light Wallet Demo
 
 A winforms demo is included to showcase how simple is to create a light wallet.
+
 The light wallet demo is able to login into any wallet by inserting a private key in either raw format or WIF format, and also to transfer funds (NEO or GAS) to any address.
+
 Please beware of using this wallet to transfer funds in Neo main net, as this wallet was created just for demonstration purpose and not exhaustively tested.
+
 City of Zion cannot be responsibilized for loss of funds caused by using this light wallet.
 
 ![Screenshot](images/light_wallet.jpg)
