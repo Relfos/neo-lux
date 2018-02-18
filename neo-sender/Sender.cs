@@ -2,7 +2,7 @@
 using NeoLux;
 using System;
 
-namespace neo_sender
+namespace Neo.Sender
 {
     class Sender
     {

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
 using Neo.Cryptography;
-using Neo.Emulator;
-using NeoLux;
 
-namespace neo_lux_demo
+namespace NeoLux.Demo
 {
     class Demo
     {
