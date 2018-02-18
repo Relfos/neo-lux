@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neo-lux-demo", "neo-lux-dem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neo-sender", "neo-sender\neo-sender.csproj", "{5B268D1A-E618-4171-A3D9-E18ECE1D627E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neo-lux-light-wallet", "neo-lux-light-wallet\neo-lux-light-wallet.csproj", "{F7AF1888-BB95-4D7F-95CC-0977CC33820D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{5B268D1A-E618-4171-A3D9-E18ECE1D627E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B268D1A-E618-4171-A3D9-E18ECE1D627E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B268D1A-E618-4171-A3D9-E18ECE1D627E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7AF1888-BB95-4D7F-95CC-0977CC33820D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7AF1888-BB95-4D7F-95CC-0977CC33820D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7AF1888-BB95-4D7F-95CC-0977CC33820D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7AF1888-BB95-4D7F-95CC-0977CC33820D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

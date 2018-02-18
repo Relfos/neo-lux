@@ -39,7 +39,7 @@ namespace NeoLux
                 AddAsset("GAS", "602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7");
             }
 
-            return _tokenScripts;
+            return _systemAssets;
         }
 
         private static void AddAsset(string symbol, string hash)
@@ -333,6 +333,11 @@ namespace NeoLux
             var signedTx = tx.signTransaction(unsignedTx, account.privateKey);
             var hexTx = tx.serializeTransaction(signedTx);
             return queryRPC(net, "sendrawtransaction", new object[] { hexTx }, 4);*/
+        }
+
+        public Dictionary<string, decimal> GetBalancesOf(KeyPair key, bool getTokens = false)
+        {
+            return GetBalancesOf(key.address, getTokens);
         }
 
         public abstract Dictionary<string, decimal> GetBalancesOf(string address, bool getTokens = false);
