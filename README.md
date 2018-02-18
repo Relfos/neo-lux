@@ -18,6 +18,7 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Console Demo](#console-demo)
+- [Light Wallet Demo](#light-wallet-demo)
 - [Unity Support](#unity-support)
 - [TODO](#todo)
 - [Credits and License](#credits-and-license)
