@@ -60,26 +60,45 @@ For invoking a Smart Contract, e.g.:
 	var myKeys = new KeyPair(privKey);
 	var scriptHash = "de1a53be359e8be9f3d11627bcca40548a2d5bc1"; // the scriptHash of the smart contract you want to use	
 	// for now, contracts must be in the format Main(string operation, object[] args)
-	var result = NeoAPI.CallContract(NeoAPI.Net.Test, myKeys, scriptHash, "registerMailbox", new object[] { "ABCDE", "demo@phantasma.io" });
+	var api = NeoRPC.ForMainNet();
+	var result = api.CallContract(myKeys, scriptHash, "registerMailbox", new object[] { "ABCDE", "demo@phantasma.io" });
 ```
 
 For transfering assets (NEO or GAS), e.g.:
 
 ```c#
-	var privKey = "XXXXXXXXXXXXXXXXprivatekeyhereXXXXXXXXXXX".HexToBytes();	 // can be any valid private key
+	var privKey = "XXXXXXXXXXXXXXXXprivatekeyhereXXXXXXXXXXX".HexToBytes();	 
+	// can be any valid private key in raw format, for WIF use KeyPair.FromWIF
 	var myKeys = new KeyPair(privKey);
 	// WARNING: For now use test net only, this code is experimental, you could lose real assets if using main net
-	var result = NeoAPI.SendAsset(NeoAPI.Net.Test, "AanTL6pTTEdnphXpyPMgb7PSE8ifSWpcXU" /*destination address*/, "GAS", 3 /*amount to send */ , myKeys);
+	var api = NeoRPC.ForTestNet();
+	var result = api.SendAsset("AanTL6pTTEdnphXpyPMgb7PSE8ifSWpcXU" /*destination address*/, "GAS", 3 /*amount to send */ , myKeys);
 ```
 
 For getting the balance of an address:
 
 ```c#
-	var balances = NeoAPI.GetBalance(NeoAPI.Net.Test, "AYpY8MKiJ9q5Fpt4EeQQmoYRHxdNHzwWHk");
+	var api = NeoRPC.ForTestNet();
+	var balances = api.GetBalancesOf("AYpY8MKiJ9q5Fpt4EeQQmoYRHxdNHzwWHk");
 	foreach (var entry in balances)
 	{
 		Console.WriteLine(entry.Key + " => " + entry.Value);
 	}
+```
+
+For interaction with a NEP5 token:
+
+```c#
+	var api = NeoRPC.ForMainNet(); 
+	var redPulse_contractHash = "ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9";
+	var redPulse_token = new NEP5(api, redPulse_contractHash);
+	Console.WriteLine($"{redPulse_token.Name} ({redPulse_token.Symbol})");
+	Console.WriteLine($"Total Supply: {redPulse_token.TotalSupply} ({redPulse_token.Symbol})");
+	
+	// you can also request transfers of tokens
+	var privKey = "XXXXXXXXXXXXXXXXprivatekeyhereXXXXXXXXXXX".HexToBytes();	 // can be any valid private key
+	var myKeys = new KeyPair(privKey);
+	redPulse_token.Transfer(myKeys, "AanTL6pTTEdnphXpyPMgb7PSE8ifSWpcXU" /*destination*/, 123 /*amount to send*/); 
 ```
 
 # Console Demo
