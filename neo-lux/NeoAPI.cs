@@ -68,8 +68,9 @@ namespace NeoLux
                 AddToken("TKY", "132947096727c84c7f9e076c90f08fec3bc17f18");
                 AddToken("TNC", "08e8c4400f1af2c20c28e0018f29535eb85d15b6");
                 AddToken("CPX", "45d493a6f73fa5f404244a5fb8472fc014ca5885");
-                AddToken("ACAT", "7f86d61ff377f1b12e589a5907152b57e2ad9a7a");
+                AddToken("ACAT","7f86d61ff377f1b12e589a5907152b57e2ad9a7a");
                 AddToken("NRV", "2e25d2127e0240c6deaf35394702feb236d4d7fc");
+                AddToken("TTL", "e15a3b08b56fbcae28391bb1547d303febccda55");
             }
 
             return _tokenScripts;
