@@ -85,7 +85,7 @@ namespace NeoLux
             result.Append(num2hexstring(tx.version));
 
             // excluusive data
-            if (tx.version == 0xd1)
+            if (tx.type == 0xd1)
             {
                 result.Append(num2VarInt(tx.script.Length));
                 result.Append(tx.script.ToHexString());
