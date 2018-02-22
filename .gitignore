@@ -4,3 +4,11 @@ neo-lux/bin/
 neo-lux/obj/
 .vs/
 neo-lux-demo/obj/
+NeoUnity/Library/
+NeoUnity/Temp/
+NeoUnity/UnityPackageManager/
+neo-lux-experimental/
+neo-sender/bin/
+neo-sender/obj/
+neo-lux-light-wallet/bin/
+neo-lux-light-wallet/obj/
